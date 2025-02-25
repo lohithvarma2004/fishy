@@ -62,6 +62,7 @@
 
     <!-- ✅ Define Joints -->
     <joint name="${prefix}Revolute_2" type="revolute">
+      <origin xyz="-0.082983 -0.047057 0.139" rpy="0 0 0"/>
       <parent link="${prefix}base_link"/>
       <child link="${prefix}Pectal_left"/>
       <axis xyz="1.0 0.0 0.0"/>
@@ -69,6 +70,7 @@
     </joint>
 
     <joint name="${prefix}Revolute_7" type="revolute">
+      <origin xyz="-0.082983 -0.047057 -0.14" rpy="0 0 0"/>
       <parent link="${prefix}base_link"/>
       <child link="${prefix}Pectal_right"/>
       <axis xyz="0.0 0.0 -1.0"/>
@@ -76,7 +78,7 @@
     </joint>
 
     <joint name="${prefix}Revolute_8" type="revolute">
-      <origin xyz="0.05 0 0" rpy="0 0 0"/>
+      <origin xyz="0.392742 -0.028093 0.0" rpy="0 0 0"/>
       <parent link="${prefix}base_link"/>
       <child link="${prefix}Caudal_Fin"/>
       <axis xyz="-0.173648 0.984808 0.0"/>
