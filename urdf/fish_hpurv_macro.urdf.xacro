@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<robot name="fish_hpurv" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Define Material Properties -->
+  <material name="fish_hpurv_silver">
+    <color rgba="0.700 0.700 0.700 1.000"/>
+  </material>
+
+  <!-- Define Main Robot Body -->
+  <xacro:macro name="fish_hpurv" params="prefix">
+    <!-- Base Link -->
+    <link name="${prefix}base_link">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="5.0"/>
+        <inertia ixx="0.01" iyy="0.01" izz="0.01" ixy="0" iyz="0" ixz="0"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://fish_hpurv_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="fish_hpurv_silver"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://fish_hpurv_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+    </link>
+    <link name="dummy_link"/>
+    <!-- Define Fins -->
+    <link name="${prefix}pectal_left">
+      <visual>
+        <geometry>
+          <mesh filename="package://fish_hpurv_description/meshes/pectal_left.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </visual>
+    </link>
+
+    <link name="${prefix}pectal_right">
+      <visual>
+        <geometry>
+          <mesh filename="package://fish_hpurv_description/meshes/pectal_right.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </visual>
+    </link>
+
+    <link name="${prefix}caudal_fin">
+      <visual>
+        <geometry>
+          <mesh filename="package://fish_hpurv_description/meshes/caudal_fin.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </visual>
+    </link>
+
+    <!-- Define Joints -->
+    <joint name="${prefix}revolute_2" type="revolute">
+      <origin xyz="-0.082983 -0.047057 0.139" rpy="0 0 0"/>
+      <parent link="${prefix}base_link"/>
+      <child link="${prefix}pectal_left"/>
+      <axis xyz="1.0 0.0 0.0"/>
+      <limit upper="0.785398" lower="-0.785398" effort="100" velocity="100"/>
+    </joint>
+
+    <joint name="${prefix}revolute_7" type="revolute">
+      <origin xyz="-0.082983 -0.047057 -0.14" rpy="0 0 0"/>
+      <parent link="${prefix}base_link"/>
+      <child link="${prefix}pectal_right"/>
+      <axis xyz="0.0 0.0 -1.0"/>
+      <limit upper="0.785398" lower="-0.785398" effort="100" velocity="100"/>
+    </joint>
+    <joint name="dummy_to_base" type="fixed">
+      <parent link="dummy_link"/>
+      <child link="base_link"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="${prefix}revolute_8" type="revolute">
+      <origin xyz="0.392742 -0.028093 0.0" rpy="0 0 0"/>
+      <parent link="${prefix}base_link"/>
+      <child link="${prefix}caudal_fin"/>
+      <axis xyz="-0.173648 0.984808 0.0"/>
+      <limit upper="0.785398" lower="-0.785398" effort="100" velocity="100"/>
+    </joint>
+
+    <!-- Add Gazebo Properties for Links -->
+    <gazebo reference="${prefix}base_link">
+      <material>Gazebo/Silver</material>
+      <mu1>0.2</mu1>
+      <mu2>0.2</mu2>
+      <self_collide>true</self_collide>
+      <gravity>true</gravity>
+    </gazebo>
+
+    <gazebo reference="${prefix}pectal_left">
+      <material>Gazebo/Silver</material>
+      <mu1>0.2</mu1>
+      <mu2>0.2</mu2>
+      <self_collide>true</self_collide>
+    </gazebo>
+
+    <gazebo reference="${prefix}pectal_right">
+      <material>Gazebo/Silver</material>
+      <mu1>0.2</mu1>
+      <mu2>0.2</mu2>
+      <self_collide>true</self_collide>
+    </gazebo>
+
+    <gazebo reference="${prefix}caudal_fin">
+      <material>Gazebo/Silver</material>
+      <mu1>0.2</mu1>
+      <mu2>0.2</mu2>
+      <self_collide>true</self_collide>
+    </gazebo>
+
+
+
+  </xacro:macro>
+
+  <!-- Instantiate the Robot -->
+  <xacro:fish_hpurv prefix=""/>
+
+</robot>
+
