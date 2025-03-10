@@ -25,7 +25,7 @@ def generate_launch_description():
     world_file = 'worlds/ocean_waves.world'
 
     # Paths to model and world files
-    model_file_path = os.path.join(get_package_share_directory(package_name), xacro_file)
+    model_file_path = os.path.join(get_package_share_directory('fish_hpurv_description'), xacro_file)
     world_file_path = os.path.join(get_package_share_directory('uuv_gazebo_worlds'), world_file)
 
     # Process the xacro file to generate the robot description (URDF)
@@ -54,7 +54,7 @@ def generate_launch_description():
     spawn_entity_node = Node(
         package='gazebo_ros',
         executable='spawn_entity.py',
-        arguments=['-entity', 'fish_hpurv', '-topic', 'robot_description'],
+        arguments=['-entity', 'fish_hpurv', '-topic', 'robot_description','-x', '0', '-y', '0', '-z', '1'],
         output='screen'
     )
 

@@ -18,23 +18,23 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://fish_hpurv_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://fish_hpurv_description/meshes/base_link.stl" scale="1 1 1"/>
         </geometry>
         <material name="fish_hpurv_silver"/>
       </visual>
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://fish_hpurv_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://fish_hpurv_description/meshes/base_link.stl" scale="1 1 1"/>
         </geometry>
       </collision>
     </link>
-    <link name="dummy_link"/>
+ 
     <!-- Define Fins -->
     <link name="${prefix}pectal_left">
       <visual>
         <geometry>
-          <mesh filename="package://fish_hpurv_description/meshes/pectal_left.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://fish_hpurv_description/meshes/Pectal_left.stl" scale="1 1 1"/>
         </geometry>
       </visual>
     </link>
@@ -42,7 +42,7 @@
     <link name="${prefix}pectal_right">
       <visual>
         <geometry>
-          <mesh filename="package://fish_hpurv_description/meshes/pectal_right.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://fish_hpurv_description/meshes/Pectal_right.stl" scale="1 1 1"/>
         </geometry>
       </visual>
     </link>
@@ -50,7 +50,7 @@
     <link name="${prefix}caudal_fin">
       <visual>
         <geometry>
-          <mesh filename="package://fish_hpurv_description/meshes/caudal_fin.stl" scale="0.001 0.001 0.001"/>
+          <mesh filename="package://fish_hpurv_description/meshes/Caudal_Fin.stl" scale="1 1 1"/>
         </geometry>
       </visual>
     </link>
@@ -68,14 +68,10 @@
       <origin xyz="-0.082983 -0.047057 -0.14" rpy="0 0 0"/>
       <parent link="${prefix}base_link"/>
       <child link="${prefix}pectal_right"/>
-      <axis xyz="0.0 0.0 -1.0"/>
+      <axis xyz="1.0 0.0 0.0"/>
       <limit upper="0.785398" lower="-0.785398" effort="100" velocity="100"/>
     </joint>
-    <joint name="dummy_to_base" type="fixed">
-      <parent link="dummy_link"/>
-      <child link="base_link"/>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-    </joint>
+
 
     <joint name="${prefix}revolute_8" type="revolute">
       <origin xyz="0.392742 -0.028093 0.0" rpy="0 0 0"/>
