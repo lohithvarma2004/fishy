@@ -4,34 +4,31 @@ from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription, SetEnvironmentVariable
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
-import xacro
 
 def generate_launch_description():
-    # Set GAZEBO_PLUGIN_PATH to include your package's lib directory
+    package_name = 'fish_hpurv'
+    
+    # Set the GAZEBO_PLUGIN_PATH to include UUV Gazebo ROS plugins
     set_gazebo_plugin_path = SetEnvironmentVariable(
         name='GAZEBO_PLUGIN_PATH',
-        value=os.path.join(get_package_share_directory('fish_hpurv_description'), 'lib')
+        value=os.path.join(get_package_share_directory('uuv_gazebo_ros_plugins'), 'lib')
     )
 
-    # Set GAZEBO_MODEL_PATH to include necessary model directories
+    # Set the GAZEBO_MODEL_PATH to include both your fish model and the UUV world models.
+    # This way, Gazebo can find your fish model as well as any models referenced by the UUV world.
     set_gazebo_model_path = SetEnvironmentVariable(
         name='GAZEBO_MODEL_PATH',
-        value=os.path.join(get_package_share_directory('uuv_gazebo_worlds'), 'models')
+        value=os.path.join(get_package_share_directory(package_name), 'models') + ':' +
+              os.path.join(get_package_share_directory('uuv_gazebo_worlds'), 'models')
     )
 
-    # Define package and file paths
-    package_name = 'fish_hpurv_description'
-    xacro_file = 'urdf/fish_hpurv_macro.urdf.xacro'
-    world_file = 'worlds/ocean_waves.world'
+    # Define file paths:
+    # Path to your fish.sdf file (located under fish_hpurv/models/fish_hpurv/fish.sdf)
+    sdf_file = os.path.join(get_package_share_directory(package_name), 'models', 'fish_hpurv', 'fish.sdf')
+    # Path to the world file from uuv_gazebo_worlds package (ocean_waves.world)
+    world_file_path = os.path.join(get_package_share_directory('uuv_gazebo_worlds'), 'worlds', 'ocean_waves.world')
 
-    # Paths to model and world files
-    model_file_path = os.path.join(get_package_share_directory('fish_hpurv_description'), xacro_file)
-    world_file_path = os.path.join(get_package_share_directory('uuv_gazebo_worlds'), world_file)
-
-    # Process the xacro file to generate the robot description (URDF)
-    robot_description = xacro.process_file(model_file_path).toxml()
-
-    # Include the Gazebo launch file from gazebo_ros with necessary plugins
+    # Include the Gazebo launch file from gazebo_ros with the specified world
     gazebo_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
             os.path.join(get_package_share_directory('gazebo_ros'), 'launch', 'gazebo.launch.py')
@@ -42,35 +39,29 @@ def generate_launch_description():
         }.items()
     )
 
-    # Robot State Publisher Node
-    robot_state_publisher_node = Node(
-        package='robot_state_publisher',
-        executable='robot_state_publisher',
-        output='screen',
-        parameters=[{'robot_description': robot_description, 'use_sim_time': True}]
-    )
-
-    # Spawn the robot in Gazebo
+    # Spawn the fish_hpurv model using its SDF file
     spawn_entity_node = Node(
         package='gazebo_ros',
         executable='spawn_entity.py',
-        arguments=['-entity', 'fish_hpurv', '-topic', 'robot_description','-x', '0', '-y', '0', '-z', '1'],
+        arguments=[
+            '-entity', 'fish_hpurv',
+            '-file', sdf_file,
+            '-x', '0', '-y', '0', '-z', '0'
+        ],
         output='screen'
     )
 
-    # Suppress ALSA warnings by redirecting stderr (optional)
+    # Optional: Suppress ALSA warnings
     suppress_alsa_warnings = SetEnvironmentVariable(
         name='ALSA_CONFIG_PATH',
         value='/etc/alsa/alsa.conf'
     )
 
-    # Create the launch description and add all actions
-    launch_description = LaunchDescription()
-    launch_description.add_action(set_gazebo_plugin_path)
-    launch_description.add_action(set_gazebo_model_path)
-    launch_description.add_action(suppress_alsa_warnings)
-    launch_description.add_action(gazebo_launch)
-    launch_description.add_action(robot_state_publisher_node)
-    launch_description.add_action(spawn_entity_node)
+    ld = LaunchDescription()
+    ld.add_action(set_gazebo_plugin_path)
+    ld.add_action(set_gazebo_model_path)
+    ld.add_action(suppress_alsa_warnings)
+    ld.add_action(gazebo_launch)
+    ld.add_action(spawn_entity_node)
 
-    return launch_description
+    return ld

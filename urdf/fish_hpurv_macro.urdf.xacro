@@ -1,122 +1,76 @@
-<?xml version="1.0"?>
-<robot name="fish_hpurv" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<?xml version="1.0" ?>
+<!-- Generated using onshape-to-robot -->
+<!-- Onshape document_id: 4836a8ecee0138adbd06e5d4 / workspace_id: a33d52e229ba318a84bbb324 -->
+<robot name="fish_hpurv">
+  
+  <!-- Link link_link1 -->
+  <link name="link_link1">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.2"/>
+      <inertia ixx="0.005" ixy="0" ixz="0" iyy="0.005" iyz="0" izz="0.005"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.0228213 0.0461472 0.010826" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://fish_hpurv/meshes/link_link1.stl">
+          <scale>4 4 4</scale>
+        </mesh>
+      </geometry>
+      <material name="link_link1_material">
+        <color rgba="0.615686 0.811765 0.929412 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.0228213 0.0461472 0.010826" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://fish_hpurv/meshes/link_link1.stl">
+          <scale>4 4 4</scale>
+        </mesh>
+      </geometry>
+    </collision>
+  </link>
 
-  <!-- Define Material Properties -->
-  <material name="fish_hpurv_silver">
-    <color rgba="0.700 0.700 0.700 1.000"/>
-  </material>
+  <!-- Link link_link2 -->
+  <link name="link_link2">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="3.14159 0 0"/>
+      <geometry>
+        <mesh filename="package://fish_hpurv/meshes/link_link2.stl">
+          <scale>4 4 4</scale>
+        </mesh>
+      </geometry>
+      <material name="link_link2_material">
+        <color rgba="0.615686 0.811765 0.929412 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="3.14159 0 0"/>
+      <geometry>
+        <mesh filename="package://fish_hpurv/meshes/link_link2.stl">
+          <scale>4 4 4</scale>
+        </mesh>
+      </geometry>
+    </collision>
+  </link>
 
-  <!-- Define Main Robot Body -->
-  <xacro:macro name="fish_hpurv" params="prefix">
-    <!-- Base Link -->
-    <link name="${prefix}base_link">
-      <inertial>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <mass value="5.0"/>
-        <inertia ixx="0.01" iyy="0.01" izz="0.01" ixy="0" iyz="0" ixz="0"/>
-      </inertial>
-      <visual>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <geometry>
-          <mesh filename="package://fish_hpurv_description/meshes/base_link.stl" scale="1 1 1"/>
-        </geometry>
-        <material name="fish_hpurv_silver"/>
-      </visual>
-      <collision>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <geometry>
-          <mesh filename="package://fish_hpurv_description/meshes/base_link.stl" scale="1 1 1"/>
-        </geometry>
-      </collision>
-    </link>
- 
-    <!-- Define Fins -->
-    <link name="${prefix}pectal_left">
-      <visual>
-        <geometry>
-          <mesh filename="package://fish_hpurv_description/meshes/Pectal_left.stl" scale="1 1 1"/>
-        </geometry>
-      </visual>
-    </link>
-
-    <link name="${prefix}pectal_right">
-      <visual>
-        <geometry>
-          <mesh filename="package://fish_hpurv_description/meshes/Pectal_right.stl" scale="1 1 1"/>
-        </geometry>
-      </visual>
-    </link>
-
-    <link name="${prefix}caudal_fin">
-      <visual>
-        <geometry>
-          <mesh filename="package://fish_hpurv_description/meshes/Caudal_Fin.stl" scale="1 1 1"/>
-        </geometry>
-      </visual>
-    </link>
-
-    <!-- Define Joints -->
-    <joint name="${prefix}revolute_2" type="revolute">
-      <origin xyz="-0.082983 -0.047057 0.139" rpy="0 0 0"/>
-      <parent link="${prefix}base_link"/>
-      <child link="${prefix}pectal_left"/>
-      <axis xyz="1.0 0.0 0.0"/>
-      <limit upper="0.785398" lower="-0.785398" effort="100" velocity="100"/>
-    </joint>
-
-    <joint name="${prefix}revolute_7" type="revolute">
-      <origin xyz="-0.082983 -0.047057 -0.14" rpy="0 0 0"/>
-      <parent link="${prefix}base_link"/>
-      <child link="${prefix}pectal_right"/>
-      <axis xyz="1.0 0.0 0.0"/>
-      <limit upper="0.785398" lower="-0.785398" effort="100" velocity="100"/>
-    </joint>
-
-
-    <joint name="${prefix}revolute_8" type="revolute">
-      <origin xyz="0.392742 -0.028093 0.0" rpy="0 0 0"/>
-      <parent link="${prefix}base_link"/>
-      <child link="${prefix}caudal_fin"/>
-      <axis xyz="-0.173648 0.984808 0.0"/>
-      <limit upper="0.785398" lower="-0.785398" effort="100" velocity="100"/>
-    </joint>
-
-    <!-- Add Gazebo Properties for Links -->
-    <gazebo reference="${prefix}base_link">
-      <material>Gazebo/Silver</material>
-      <mu1>0.2</mu1>
-      <mu2>0.2</mu2>
-      <self_collide>true</self_collide>
-      <gravity>true</gravity>
-    </gazebo>
-
-    <gazebo reference="${prefix}pectal_left">
-      <material>Gazebo/Silver</material>
-      <mu1>0.2</mu1>
-      <mu2>0.2</mu2>
-      <self_collide>true</self_collide>
-    </gazebo>
-
-    <gazebo reference="${prefix}pectal_right">
-      <material>Gazebo/Silver</material>
-      <mu1>0.2</mu1>
-      <mu2>0.2</mu2>
-      <self_collide>true</self_collide>
-    </gazebo>
-
-    <gazebo reference="${prefix}caudal_fin">
-      <material>Gazebo/Silver</material>
-      <mu1>0.2</mu1>
-      <mu2>0.2</mu2>
-      <self_collide>true</self_collide>
-    </gazebo>
-
-
-
-  </xacro:macro>
-
-  <!-- Instantiate the Robot -->
-  <xacro:fish_hpurv prefix=""/>
+  <!-- Joint from link_link1 to link_link2 -->
+  <joint name="join1" type="prismatic">
+    <origin xyz="0.0228213 0.0461472 0.035826" rpy="3.14159 0 0"/>
+    <parent link="link_link1"/>
+    <child link="link_link2"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="10" velocity="10" lower="-1" upper="1"/>
+  </joint>
+  
+  <!-- Mark the robot as static so it won't fall -->
+  <gazebo>
+    <static>true</static>
+  </gazebo>
 
 </robot>
-

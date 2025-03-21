@@ -1,0 +1,23 @@
+<sdf version="1.6">
+  <world name="fish_world">
+    <!-- Ground plane -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <!-- Sun -->
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <!-- Your fish_hpurv model -->
+    <include>
+      <uri>model://fish_hpurv</uri>
+      <!-- Raise the model 1 meter above ground so it's clearly visible -->
+      <pose>0 0 1 0 0 0</pose>
+    </include>
+
+    <!-- Optional: Default physics -->
+    <physics name="default_physics" default="False" type="ode"/>
+  </world>
+</sdf>

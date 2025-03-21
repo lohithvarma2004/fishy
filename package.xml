@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>fish_hpurv_description</name>
+  <name>fish_hpurv</name>
   <version>0.0.0</version>
 <description>The fish_hpurv_description package</description>
   <maintainer email="todo@todo.com">author</maintainer>

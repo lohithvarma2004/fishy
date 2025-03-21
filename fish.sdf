@@ -1,0 +1,150 @@
+<sdf version='1.6'>
+  <model name='fish_hpurv'>
+
+    <!-- LINK: link_base -->
+    <link name='link_base'>
+      <pose>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.5</mass>
+        <inertia>
+          <ixx>0.01</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.01</iyy>
+          <iyz>0</iyz>
+          <izz>0.01</izz>
+        </inertia>
+      </inertial>
+      <collision name='link_base_collision'>
+        <pose>0.005651 0.012105 0.000613 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://fish_hpurv/meshes/link_base.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='link_base_visual'>
+        <pose>0.005651 0.012105 0.000613 0 0 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://fish_hpurv/meshes/link_base.stl</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+
+    <!-- LINK: link_p2 -->
+    <link name='link_p2'>
+      <pose>0.005651 0.012105 0.029003 3.14159 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.1</mass>
+        <inertia>
+          <ixx>0.001</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.001</iyy>
+          <iyz>0</iyz>
+          <izz>0.001</izz>
+        </inertia>
+      </inertial>
+      <collision name='link_p2_collision'>
+        <pose>0 0.003 -0.0026 1.5708 1.5708 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://fish_hpurv/meshes/link_p2.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='link_p2_visual'>
+        <pose>0 0.003 -0.0026 1.5708 1.5708 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://fish_hpurv/meshes/link_p2.stl</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+
+    <!-- JOINT: joint1 -->
+    <joint name='joint1' type='revolute'>
+      <pose>0.005651 0.012105 0.029003 3.14159 0 0</pose>
+      <parent>link_base</parent>
+      <child>link_p2</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-0.523599</lower>
+          <upper>0.523599</upper>
+          <effort>10</effort>
+          <velocity>10</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+
+    <!-- LINK: link_p1 -->
+    <link name='link_p1'>
+      <pose>0.005651 0.012105 -0.002387 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.1</mass>
+        <inertia>
+          <ixx>0.001</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixx>
+          <iyy>0.001</iyy>
+          <iyz>0</iyz>
+          <izz>0.001</izz>
+        </inertia>
+      </inertial>
+      <collision name='link_p1_collision'>
+        <pose>0 0.003 -0.0026 1.5708 1.5708 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://fish_hpurv/meshes/link_p1.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name='link_p1_visual'>
+        <pose>0 0.003 -0.0026 1.5708 1.5708 0</pose>
+        <geometry>
+          <mesh>
+            <scale>1 1 1</scale>
+            <uri>model://fish_hpurv/meshes/link_p1.stl</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+
+    <!-- JOINT: joint2 -->
+    <joint name='joint2' type='revolute'>
+      <pose>0.005651 0.012105 -0.002387 0 0 0</pose>
+      <parent>link_base</parent>
+      <child>link_p1</child>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-0.523599</lower>
+          <upper>0.523599</upper>
+          <effort>10</effort>
+          <velocity>10</velocity>
+        </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+      </axis>
+    </joint>
+
+  </model>
+</sdf>
