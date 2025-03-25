@@ -1,236 +1,310 @@
-<sdf version="1.6">
-  <model name="fish_hpurv">
-    <!-- Base Link: link_base -->
-    <link name="link_base">
-      <!-- The link frame is set at the origin -->
+<?xml version="1.0" ?>
+<robot name="fish_hpurv">
+  <!-- Link: link_base -->
+  <link name="link_base">
+    <inertial>
+      <origin xyz="0.0325815 0.0493006 -0.0204279" rpy="0 0 0"/>
+      <mass value="12"/>  <!-- assume base mass remains 12 kg -->
+      <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.0325815 0.0493006 0.02" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="$(find fish_hpurv)/meshes/link_base.stl"/>
+      </geometry>
+      <material name="link_base_material">
+        <color rgba="0.796078 0.823529 0.937255 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.0325815 0.0493006 -0.0204279" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="$(find fish_hpurv)/meshes/link_base.stl"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Link: link_caudal -->
+  <link name="link_caudal">
+    <inertial>
+      <origin xyz="-0.378805 2.04697e-16 -0.05" rpy="1.5708 0 0"/>
+      <mass value="0.2"/>
+      <inertia ixx="0.005" ixy="0" ixz="0" iyy="0.005" iyz="0" izz="0.005"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.378805 2.04697e-16 -0.05" rpy="1.5708 0 0"/>
+      <geometry>
+        <mesh filename="$(find fish_hpurv)/meshes/link_caudal.stl"/>
+      </geometry>
+      <material name="link_caudal_material">
+        <color rgba="0.796078 0.823529 0.937255 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.378805 2.04697e-16 -0.05" rpy="1.5708 0 0"/>
+      <geometry>
+        <mesh filename="$(find fish_hpurv)/meshes/link_caudal.stl"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Joint: caudal_joint (from link_base to link_caudal) -->
+  <joint name="caudal_joint" type="revolute">
+    <origin xyz="0.425323 0.0953079 0.02" rpy="-1.5708 0 0"/>
+    <parent link="link_base"/>
+    <child link="link_caudal"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="10" velocity="10" lower="-0.523599" upper="0.523599"/>
+  </joint>
+
+  <!-- Link: link_pectoral_left -->
+  <link name="link_pectoral_left">
+    <inertial>
+      <origin xyz="0.0829833 -0.0470575 0.13" rpy="3.14159 0 0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.0829833 -0.0470575 0.13" rpy="3.14159 0 0"/>
+      <geometry>
+        <mesh filename="$(find fish_hpurv)/meshes/link_pectoral_left.stl"/>
+      </geometry>
+      <material name="link_pectoral_left_material">
+        <color rgba="0.796078 0.823529 0.937255 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.0829833 -0.0470575 0.13" rpy="3.14159 0 0"/>
+      <geometry>
+        <mesh filename="$(find fish_hpurv)/meshes/link_pectoral_left.stl"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Joint: joint1 (from link_base to link_pectoral_left) -->
+  <joint name="joint1" type="revolute">
+    <origin xyz="-0.0504018 0.00224307 0.158572" rpy="3.14159 0 0"/>
+    <parent link="link_base"/>
+    <child link="link_pectoral_left"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="10" velocity="10" lower="-0.785398" upper="0.785398"/>
+  </joint>
+
+  <!-- Link: link_pectoral_right -->
+  <link name="link_pectoral_right">
+    <inertial>
+      <origin xyz="0.0829833 0.0470575 0.13" rpy="0 0 0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.0829833 0.0470575 0.13" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="$(find fish_hpurv)/meshes/link_pectoral_right.stl"/>
+      </geometry>
+      <material name="link_pectoral_right_material">
+        <color rgba="0.796078 0.823529 0.937255 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.0829833 0.0470575 0.13" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="$(find fish_hpurv)/meshes/link_pectoral_right.stl"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Joint: joint2 (from link_base to link_pectoral_right) -->
+  <joint name="joint2" type="revolute">
+    <origin xyz="-0.0504018 0.00224307 -0.120328" rpy="0 0 0"/>
+    <parent link="link_base"/>
+    <child link="link_pectoral_right"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="10" velocity="10" lower="-0.785398" upper="0.785398"/>
+  </joint>
+
+  <joint name="laser_joint" type="fixed">
+    <parent link="link_base"/>
+    <child link="laser_frame"/>
+    <!-- Place the sensor slightly ahead; here we use an offset relative to link_base -->
+    <origin xyz="0.0325815 0.0493006 0.02" rpy="1.57 0 0"/>
+  </joint>
+
+  <link name="laser_frame">
+    <inertial>
+      <!-- The inertial origin is at (0,0,0) for the laser_frame -->
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.05" length="0.04"/>
+      </geometry>
+      <material name="red">
+        <color rgba="1 0 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.05" length="0.04"/>
+      </geometry>
+    </collision>
+  </link>
+  <!-- Sensor plugin for the LiDAR remains as before -->
+  <gazebo reference="laser_frame">
+    <material>Gazebo/Red</material>
+    <sensor name="laser" type="ray">
       <pose>0 0 0 0 0 0</pose>
-      <inertial>
-        <!-- Move the URDF inertial offset into the link's frame by zeroing the inertial pose -->
-        <pose>0 0 0 0 0 0</pose>
-        <mass>50</mass>
-        <inertia>
-          <ixx>0.01</ixx>
-          <ixy>0</ixy>
-          <ixz>0</ixz>
-          <iyy>0.01</iyy>
-          <iyz>0</iyz>
-          <izz>0.01</izz>
-        </inertia>
-      </inertial>
-      <collision name="link_base_collision">
-        <!-- Element pose zeroed; the mesh should be positioned relative to the link frame -->
-        <pose>0 0 0 0 0 0</pose>
-        <geometry>
-          <mesh>
-            <scale>1 1 1</scale>
-            <uri>model://fish_hpurv/meshes/link_base.stl</uri>
-          </mesh>
-        </geometry>
-      </collision>
-      <visual name="link_base_visual">
-        <pose>0 0 0 0 0 0</pose>
-        <geometry>
-          <mesh>
-            <scale>1 1 1</scale>
-            <uri>model://fish_hpurv/meshes/link_base.stl</uri>
-          </mesh>
-        </geometry>
-      </visual>
-    </link>
-    
-    <!-- Joint: caudal_joint -->
-    <joint name="caudal_joint" type="revolute">
-      <!-- Use the URDF joint origin directly as the transformation from link_base frame to link_caudal frame -->
-      <pose>0.425323 0.0803079 -0.0204279 -1.5708 0 0</pose>
-      <parent>link_base</parent>
-      <child>link_caudal</child>
-      <axis>
-        <xyz>0 0 1</xyz>
-        <limit>
-          <lower>-0.523599</lower>
-          <upper>0.523599</upper>
-          <effort>10</effort>
-          <velocity>10</velocity>
-        </limit>
-        <dynamics>
-          <damping>1.5</damping>
-          <spring_reference>0</spring_reference>
-          <spring_stiffness>0</spring_stiffness>
-        </dynamics>
-      </axis>
-    </joint>
-    
-    <!-- Child Link: link_caudal -->
-    <link name="link_caudal">
-      <!-- The link frame is now at the joint origin -->
-      <pose>0 0 0 0 0 0</pose>
-      <inertial>
-        <!-- The inertial offset from URDF is applied relative to the link frame -->
-        <pose>-0.378805 0 -0.05 1.5708 0 0</pose>
-        <mass>10</mass>
-        <inertia>
-          <ixx>0.005</ixx>
-          <ixy>0</ixy>
-          <ixz>0</ixz>
-          <iyy>0.005</iyy>
-          <iyz>0</iyz>
-          <izz>0.005</izz>
-        </inertia>
-      </inertial>
-      <collision name="link_caudal_collision">
-        <pose>0 0 0 0 0 0</pose>
-        <geometry>
-          <mesh>
-            <scale>1 1 1</scale>
-            <uri>model://fish_hpurv/meshes/link_caudal.stl</uri>
-          </mesh>
-        </geometry>
-      </collision>
-      <visual name="link_caudal_visual">
-        <pose>0 0 0 0 0 0</pose>
-        <geometry>
-          <mesh>
-            <scale>1 1 1</scale>
-            <uri>model://fish_hpurv/meshes/link_caudal.stl</uri>
-          </mesh>
-        </geometry>
-      </visual>
-    </link>
-    
-    <!-- Joint: joint1 (for left pectoral fin) -->
-    <joint name="joint1" type="revolute">
-      <pose>-0.0504018 0.00224307 0.118572 3.14159 0 0</pose>
-      <parent>link_base</parent>
-      <child>link_pectoral_left</child>
-      <axis>
-        <xyz>0 0 1</xyz>
-        <limit>
-          <lower>-0.785398</lower>
-          <upper>0.785398</upper>
-          <effort>10</effort>
-          <velocity>10</velocity>
-        </limit>
-        <dynamics>
-          <damping>1.5</damping>
-          <spring_reference>0</spring_reference>
-          <spring_stiffness>0</spring_stiffness>
-        </dynamics>
-      </axis>
-    </joint>
-    
-    <!-- Child Link: link_pectoral_left -->
-    <link name="link_pectoral_left">
-      <!-- The link frame is at the joint origin -->
-      <pose>0 0 0 0 0 0</pose>
-      <inertial>
-        <!-- Apply the URDF offset for this fin -->
-        <pose>0.0829833 -0.0470575 0.13 3.14159 0 0</pose>
-        <mass>5</mass>
-        <inertia>
-          <ixx>0.001</ixx>
-          <ixy>0</ixy>
-          <ixz>0</ixz>
-          <iyy>0.001</iyy>
-          <iyz>0</iyz>
-          <izz>0.001</izz>
-        </inertia>
-      </inertial>
-      <collision name="link_pectoral_left_collision">
-        <pose>0 0 0 0 0 0</pose>
-        <geometry>
-          <mesh>
-            <scale>1 1 1</scale>
-            <uri>model://fish_hpurv/meshes/link_pectoral_left.stl</uri>
-          </mesh>
-        </geometry>
-      </collision>
-      <visual name="link_pectoral_left_visual">
-        <pose>0 0 0 0 0 0</pose>
-        <geometry>
-          <mesh>
-            <scale>1 1 1</scale>
-            <uri>model://fish_hpurv/meshes/link_pectoral_left.stl</uri>
-          </mesh>
-        </geometry>
-      </visual>
-    </link>
-    
-    <!-- Joint: joint2 (for right pectoral fin) -->
-    <joint name="joint2" type="revolute">
-      <pose>-0.0504018 0.00224307 -0.160428 0 0 0</pose>
-      <parent>link_base</parent>
-      <child>link_pectoral_right</child>
-      <axis>
-        <xyz>0 0 1</xyz>
-        <limit>
-          <lower>-0.785398</lower>
-          <upper>0.785398</upper>
-          <effort>10</effort>
-          <velocity>10</velocity>
-        </limit>
-        <dynamics>
-          <damping>1.5</damping>
-          <spring_reference>0</spring_reference>
-          <spring_stiffness>0</spring_stiffness>
-        </dynamics>
-      </axis>
-    </joint>
-    
-    <!-- Child Link: link_pectoral_right -->
-    <link name="link_pectoral_right">
-      <!-- The link frame is at the joint origin -->
-      <pose>0 0 0 0 0 0</pose>
-      <inertial>
-        <pose>0.0829833 0.0470575 0.13 0 0 0</pose>
-        <mass>5</mass>
-        <inertia>
-          <ixx>0.001</ixx>
-          <ixy>0</ixy>
-          <ixz>0</ixz>
-          <iyy>0.001</iyy>
-          <iyz>0</iyz>
-          <izz>0.001</izz>
-        </inertia>
-      </inertial>
-      <collision name="link_pectoral_right_collision">
-        <pose>0 0 0 0 0 0</pose>
-        <geometry>
-          <mesh>
-            <scale>1 1 1</scale>
-            <uri>model://fish_hpurv/meshes/link_pectoral_right.stl</uri>
-          </mesh>
-        </geometry>
-      </collision>
-      <visual name="link_pectoral_right_visual">
-        <pose>0 0 0 0 0 0</pose>
-        <geometry>
-          <mesh>
-            <scale>1 1 1</scale>
-            <uri>model://fish_hpurv/meshes/link_pectoral_right.stl</uri>
-          </mesh>
-        </geometry>
-      </visual>
-    </link>
-    
-    <!-- GAZEBO PLUGIN: Buoyancy -->
+      <visualize>false</visualize>
+      <update_rate>10</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>360</samples>
+            <min_angle>-3.14</min_angle>
+            <max_angle>3.14</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.3</min>
+          <max>12</max>
+        </range>
+      </ray>
+      <plugin name="laser_controller" filename="libgazebo_ros_laser.so">
+        <ros>
+          <argument>~/out:=/scan</argument>
+        </ros>
+        <output_type>sensor_msgs/LaserScan</output_type>
+        <frame_name>laser_frame</frame_name>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <joint name="imu_joint" type="fixed">
+    <parent link="link_base"/>
+    <child link="imu_link"/>
+    <!-- Place the IMU at a chosen offset on link_base; adjust xyz as needed -->
+    <origin xyz="0.0325815 0.0493006 0.02" rpy="1.57 0 0"/>
+  </joint>
+
+  <link name="imu_link">
+    <inertial>
+      <!-- Small inertial values for the sensor -->
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.000001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.000001"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.01 0.01 0.01"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.01 0.01 0.01"/>
+      </geometry>
+    </collision>
+  </link>
+  <gazebo reference="imu_link">
+    <sensor name="imu_sensor" type="imu">
+      <update_rate>50</update_rate>
+      <always_on>true</always_on>
+      <visualize>true</visualize>
+      <plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
+        <ros>
+          <argument>~/out:=/imu/data</argument>
+        </ros>
+        <topicName>/imu/data</topicName>
+        <frameName>imu_link</frameName>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+<gazebo reference="link_base">
+  <sensor name="dvl_sensor" type="ray">
+    <!-- Sensor pose relative to link_base -->
+    <pose>0.03 -0.085 0  0  1.5708 0 </pose>
+    <!-- Enable visualization so you can see the beams -->
+    <visualize>true</visualize>
+    <!-- Set update rate (Hz) -->
+    <update_rate>10</update_rate>
+    <ray>
+      <scan>
+        <horizontal>
+          <!-- 360 samples for a full circle scan -->
+          <samples>360</samples>
+          <min_angle>3.14</min_angle>
+          <max_angle>6.28</max_angle>
+        </horizontal>
+      </scan>
+      <range>
+        <min>0.1</min>
+        <max>10</max>
+      </range>
+    </ray>
+    <!-- Load your custom DVL plugin -->
+    <plugin name="custom_dvl_plugin" filename="libfish_dvl_plugin.so"/>
+  </sensor>
+</gazebo>
+
+
+
+  <gazebo>
+    <!-- Buoyancy Plugin: Merge laser_frame into link_base -->
     <plugin name="buoyancy_plugin" filename="libBuoyancyPlugin.so">
       <fluid_density>1000</fluid_density>
+      <!-- For link_base, add the mass/volume of the laser_frame -->
+      <!-- Original link_base volume: 0.012; add 0.0001 from laser_frame = 0.0121 -->
+      <!-- The center of volume for link_base remains essentially unchanged -->
       <link name="link_base">
-        <volume>0.05</volume>
-        <center_of_volume>0.0325815 0.0493006 -0.0204279</center_of_volume>
+        <volume>0.0122</volume>
+        <center_of_volume>0.0325815 0.0493006 0.02</center_of_volume>
       </link>
       <link name="link_caudal">
-        <volume>0.01</volume>
-        <center_of_volume>-0.378805 0 -0.05</center_of_volume>
+        <volume>0.0002</volume>
+        <center_of_volume>-0.378805 0  -0.05</center_of_volume>
       </link>
       <link name="link_pectoral_left">
-        <volume>0.005</volume>
+        <volume>0.0001</volume>
         <center_of_volume>0.0829833 -0.0470575 0.13</center_of_volume>
       </link>
       <link name="link_pectoral_right">
-        <volume>0.005</volume>
+        <volume>0.0001</volume>
         <center_of_volume>0.0829833 0.0470575 0.13</center_of_volume>
       </link>
+      <!-- Remove the separate laser_frame entry so that its mass/volume is merged with link_base -->
     </plugin>
-  </model>
-</sdf>
+
+    <plugin name="hydrodynamics_plugin" filename="libHydrodynamicsPlugin.so">
+      <!-- Added mass terms (example values) -->
+      <xDotU>-10.0</xDotU>
+      <yDotV>-10.0</yDotV>
+      <zDotW>-10.0</zDotW>
+      <kDotP>-0.1</kDotP>
+      <mDotQ>-0.1</mDotQ>
+      <nDotR>-0.1</nDotR>
+      <!-- Linear and quadratic damping coefficients (example values) -->
+      <xUabsU>-0.32282</xUabsU>
+      <xU>-2.5</xU>
+      <yVabsV>-0.1</yVabsV>
+      <yV>-0.5</yV>
+      <zWabsW>-0.1</zWabsW>
+      <zW>-0.5</zW>
+      <kPabsP>-0.5</kPabsP>
+      <kP>-0.5</kP>
+      <mQabsQ>-0.5</mQabsQ>
+      <mQ>-0.5</mQ>
+      <nRabsR>-0.5</nRabsR>
+      <nR>-0.5</nR>
+      <default_current>0 0 0</default_current>
+    </plugin>
+  </gazebo>
+</robot>
