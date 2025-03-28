@@ -18,6 +18,8 @@
   <depend>gazebo_ros2_control</depend>
   <depend>controller_manager</depend>
   <depend>ros2launch</depend>
+  <depend>rclcpp</depend>
+  <depend>trajectory_msgs</depend>
   
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
