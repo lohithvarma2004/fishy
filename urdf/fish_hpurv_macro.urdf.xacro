@@ -3,12 +3,12 @@
   <!-- Link: link_base -->
   <link name="link_base">
     <inertial>
-      <origin xyz="0.0325815 0.0493006 -0.0204279" rpy="0 0 0"/>
+      <origin xyz="0.0325815 0.0493006 -0.0204279" rpy="1.57 0 0"/>
       <mass value="12"/>  <!-- assume base mass remains 12 kg -->
       <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
     </inertial>
     <visual>
-      <origin xyz="0.0325815 0.0493006 0.02" rpy="0 0 0"/>
+      <origin xyz="0.0325815 0.0493006 0.02" rpy="1.57 0 0"/>
       <geometry>
         <mesh filename="$(find fish_hpurv)/meshes/link_base.stl"/>
       </geometry>
@@ -17,7 +17,7 @@
       </material>
     </visual>
     <collision>
-      <origin xyz="0.0325815 0.0493006 -0.0204279" rpy="0 0 0"/>
+      <origin xyz="0.0325815 0.0493006 -0.0204279" rpy="1.57 0 0"/>
       <geometry>
         <mesh filename="$(find fish_hpurv)/meshes/link_base.stl"/>
       </geometry>
@@ -27,12 +27,12 @@
   <!-- Link: link_caudal -->
   <link name="link_caudal">
     <inertial>
-      <origin xyz="-0.378805 2.04697e-16 -0.05" rpy="1.5708 0 0"/>
+      <origin xyz="-0.378805 2.04697e-16 -0.05" rpy="0 0 0"/>
       <mass value="0.2"/>
       <inertia ixx="0.005" ixy="0" ixz="0" iyy="0.005" iyz="0" izz="0.005"/>
     </inertial>
     <visual>
-      <origin xyz="-0.378805 2.04697e-16 -0.05" rpy="1.5708 0 0"/>
+      <origin xyz="-0.378805 2.04697e-16 -0.05" rpy="0 0 0"/>
       <geometry>
         <mesh filename="$(find fish_hpurv)/meshes/link_caudal.stl"/>
       </geometry>
@@ -41,7 +41,7 @@
       </material>
     </visual>
     <collision>
-      <origin xyz="-0.378805 2.04697e-16 -0.05" rpy="1.5708 0 0"/>
+      <origin xyz="-0.378805 2.04697e-16 -0.05" rpy="0 0 0"/>
       <geometry>
         <mesh filename="$(find fish_hpurv)/meshes/link_caudal.stl"/>
       </geometry>
@@ -60,12 +60,12 @@
   <!-- Link: link_pectoral_left -->
   <link name="link_pectoral_left">
     <inertial>
-      <origin xyz="0.0829833 -0.0470575 0.13" rpy="3.14159 0 0"/>
+      <origin xyz="0.0829833 -0.0470575 0.13" rpy="1.5708 0 0"/>
       <mass value="0.1"/>
       <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
     </inertial>
     <visual>
-      <origin xyz="0.0829833 -0.0470575 0.13" rpy="3.14159 0 0"/>
+      <origin xyz="0.0829833 -0.0470575 0.13" rpy="1.5708 0 0"/>
       <geometry>
         <mesh filename="$(find fish_hpurv)/meshes/link_pectoral_left.stl"/>
       </geometry>
@@ -74,7 +74,7 @@
       </material>
     </visual>
     <collision>
-      <origin xyz="0.0829833 -0.0470575 0.13" rpy="3.14159 0 0"/>
+      <origin xyz="0.0829833 -0.0470575 0.13" rpy="1.5708 0 0"/>
       <geometry>
         <mesh filename="$(find fish_hpurv)/meshes/link_pectoral_left.stl"/>
       </geometry>
@@ -93,12 +93,12 @@
   <!-- Link: link_pectoral_right -->
   <link name="link_pectoral_right">
     <inertial>
-      <origin xyz="0.0829833 0.0470575 0.13" rpy="0 0 0"/>
+      <origin xyz="0.0829833 0.0470575 0.13" rpy="-1.5708 0 0"/>
       <mass value="0.1"/>
       <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
     </inertial>
     <visual>
-      <origin xyz="0.0829833 0.0470575 0.13" rpy="0 0 0"/>
+      <origin xyz="0.0829833 0.0470575 0.13" rpy="-1.5708 0 0"/>
       <geometry>
         <mesh filename="$(find fish_hpurv)/meshes/link_pectoral_right.stl"/>
       </geometry>
@@ -107,7 +107,7 @@
       </material>
     </visual>
     <collision>
-      <origin xyz="0.0829833 0.0470575 0.13" rpy="0 0 0"/>
+      <origin xyz="0.0829833 0.0470575 0.13" rpy="-1.5708 0 0"/>
       <geometry>
         <mesh filename="$(find fish_hpurv)/meshes/link_pectoral_right.stl"/>
       </geometry>
@@ -127,7 +127,7 @@
     <parent link="link_base"/>
     <child link="laser_frame"/>
     <!-- Place the sensor slightly ahead; here we use an offset relative to link_base -->
-    <origin xyz="0.0325815 0.0493006 0.02" rpy="1.57 0 0"/>
+    <origin xyz="0.0325815 0.0493006 0.02" rpy="0 0 0"/>
   </joint>
 
   <link name="laser_frame">
@@ -158,7 +158,7 @@
     <material>Gazebo/Red</material>
     <sensor name="laser" type="ray">
       <pose>0 0 0 0 0 0</pose>
-      <visualize>false</visualize>
+      <visualize>true</visualize>
       <update_rate>10</update_rate>
       <ray>
         <scan>
@@ -187,7 +187,7 @@
     <parent link="link_base"/>
     <child link="imu_link"/>
     <!-- Place the IMU at a chosen offset on link_base; adjust xyz as needed -->
-    <origin xyz="0.0325815 0.0493006 0.02" rpy="1.57 0 0"/>
+    <origin xyz="0.0325815 0.0493006 0.02" rpy="0 0 0"/>
   </joint>
 
   <link name="imu_link">
@@ -230,32 +230,33 @@
 
 <gazebo reference="link_base">
   <sensor name="dvl_sensor" type="ray">
-    <!-- Sensor pose relative to link_base -->
-    <pose>0.03 -0.085 0  0  1.5708 0 </pose>
-    <!-- Enable visualization so you can see the beams -->
+    <!-- Sensor pose relative to link_base (positioned 1.5708 radians (90°) downward) -->
+    <pose>0.03 -0.085 -0.06  0  3.14 0</pose>
     <visualize>true</visualize>
-    <!-- Set update rate (Hz) -->
     <update_rate>10</update_rate>
     <ray>
       <scan>
         <horizontal>
-          <!-- 360 samples for a full circle scan -->
-          <samples>360</samples>
-          <min_angle>3.14</min_angle>
-          <max_angle>6.28</max_angle>
+          <!-- 4 beams spanning 360° -->
+          <samples>4</samples>
+          <min_angle>0</min_angle>
+          <max_angle>6.28319</max_angle> <!-- 360° -->
         </horizontal>
+        <vertical>
+          <!-- Tilt beams 70° from sensor's horizontal plane (20° from vertical) -->
+          <samples>1</samples>
+          <min_angle>1.2217</min_angle> <!-- 70° in radians -->
+          <max_angle>1.2217</max_angle>
+        </vertical>
       </scan>
       <range>
         <min>0.1</min>
-        <max>10</max>
+        <max>100</max>
       </range>
     </ray>
-    <!-- Load your custom DVL plugin -->
     <plugin name="custom_dvl_plugin" filename="libfish_dvl_plugin.so"/>
   </sensor>
 </gazebo>
-
-
 
   <gazebo>
     <!-- Buoyancy Plugin: Merge laser_frame into link_base -->
