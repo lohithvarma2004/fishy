@@ -12,9 +12,9 @@ controller_manager:
 joint_trajectory_controller:
   ros__parameters:
     joints:
-      - caudal_joint
-      - joint1
-      - joint2
+      - fish_hpurv/fin1_joint
+      - fish_hpurv/fin2_joint
+      - fish_hpurv/fin3_joint
     interface_name: position
     command_interfaces:
       - position

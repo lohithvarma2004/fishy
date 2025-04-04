@@ -27,7 +27,7 @@ private:
     auto message = trajectory_msgs::msg::JointTrajectory();
     
     // Set joint names as in your URDF under the <ros2_control> block
-    message.joint_names = {"caudal_joint", "joint1", "joint2"};
+    message.joint_names = {"fish_hpurv/fin1_joint", "fish_hpurv/fin2_joint", "fish_hpurv/fin3_joint"};
     
     auto point = trajectory_msgs::msg::JointTrajectoryPoint();
 
